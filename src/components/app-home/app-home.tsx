@@ -198,7 +198,7 @@ export class AppHome {
 
   // CHARACTER FUNCTIONS
   resetStats(): void {
-    this.character.level = 0;
+    this.character.level = 1;
     this.character.equipmentBonus = 0;
     
     this.saveStats();
