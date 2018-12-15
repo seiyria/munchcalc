@@ -42,3 +42,9 @@ ion-content {
   --ion-color-primary-shade: #271000;
   --ion-color-primary-tint: #412a1a;
 }
+
+.hr {
+  border-bottom: 1px solid #000;
+  margin: 10px 0;
+  width: 100%;
+}

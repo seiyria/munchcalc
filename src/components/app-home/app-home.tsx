@@ -1,5 +1,5 @@
 import { Component, State } from '@stencil/core';
-import { Character, Combat } from '../../interfaces';
+import { Character, Combat, Slot } from '../../interfaces';
 
 @Component({
   tag: 'app-home',
@@ -7,9 +7,12 @@ import { Character, Combat } from '../../interfaces';
 })
 export class AppHome {
 
+  buttons = ['Head', 'Torso', 'Feet', 'Hand'];
+
   @State() character: Character = {
     level: 1,
-    equipmentBonus: 0
+    equipmentBonus: 0,
+    items: []
   };
 
   @State() combat: Combat = {
@@ -22,8 +25,9 @@ export class AppHome {
   }
 
   private loadCharacter() {
-    this.character.level = +localStorage.getItem('charLevel') || 0;
+    this.character.level = +localStorage.getItem('charLevel') || 1;
     this.character.equipmentBonus = +localStorage.getItem('charEquip') || 0;
+    this.character.items = JSON.parse(localStorage.getItem('charItems')) || [];
   }
 
   combatScoreMessage() {
@@ -48,10 +52,10 @@ export class AppHome {
     return [
       <div margin-top>
 
-        <h2>Total Score</h2>
+        <h3>Total Combat Score</h3>
 
         <div>
-          { this.character.equipmentBonus + this.character.level } (base) 
+          { this.totalScore } (base) 
           { this.combat.combatTotal >= 0 ? ' +' : ' -' } { Math.abs(this.combat.combatTotal) } = 
           <strong>{ ' ' + (this.character.equipmentBonus + this.character.level + this.combat.combatTotal) }</strong>
         </div>
@@ -113,9 +117,13 @@ export class AppHome {
       </ion-header>,
 
       <ion-content padding text-center>
-        <h2>
+        <div class="hr"></div>
+        <h2>Character</h2>
+        <div class="hr"></div>
+
+        <h3>
           <ion-label>Level</ion-label>
-        </h2>
+        </h3>
 
         <div margin-top class="row">
           <span class="col left">
@@ -133,9 +141,47 @@ export class AppHome {
           </span>
         </div>
 
-        <h2>
-          <ion-label>Equipment</ion-label>
-        </h2>
+        <h3>
+          <ion-label>Items</ion-label>
+        </h3>
+
+        <div>
+          { this.buttons.map(button => {
+            return <ion-button color="medium" onClick={() => this.addItem(button)}>+ {button}</ion-button>;
+          }) }
+        </div>
+
+        { this.character.items.map((item, index) => {
+          return <div class="item" margin-vertical>
+            <span class="slot" margin-right>{ item.slot }</span>
+
+            <span margin-horizontal class="row">
+              <span class="col left">
+                <ion-button onClick={() => this.updateItemScore(index, -1)}>
+                  -1
+                </ion-button>
+              </span>
+
+              <span class="col center" margin-horizontal>{ item.score }</span>
+
+              <span class="col right">
+                <ion-button onClick={() => this.updateItemScore(index, 1)}>
+                  +1
+                </ion-button>
+              </span>
+            </span>
+
+            <span margin-left>
+              <ion-button color="danger" onClick={() => this.removeItem(index)}>
+                <ion-icon name="close"></ion-icon>
+              </ion-button>
+            </span>
+          </div>;
+        }) }
+
+        <h3>
+          <ion-label>Extra Item Score</ion-label>
+        </h3>
 
         <div margin-top class="row">
           <span class="col left">
@@ -165,16 +211,27 @@ export class AppHome {
           </span>
         </div>
 
+        <h4>Total Item Score</h4>
+
+        { this.character.level } (level) + { this.totalItemScore } (gear) + { this.character.equipmentBonus } (items) =
+        <strong> { this.totalScore }</strong>
+
+        { this.character.items.map(item => {
+          <span>{ item.slot }</span>
+        }) }
+          
+        <div class="hr"></div>
         <h2>
           <ion-label>Combat</ion-label>
         </h2>
+        <div class="hr"></div>
 
         <div>
-          <ion-button onClick={() => this.toggleCombatVisibility(!this.combat.combatVisible)}>
+          <ion-button color="medium" onClick={() => this.toggleCombatVisibility(!this.combat.combatVisible)}>
             Toggle Combat
           </ion-button>
 
-          <ion-button onClick={() => this.resetCombat()}>
+          <ion-button color="medium" onClick={() => this.resetCombat()}>
             Reset Combat
           </ion-button>
         </div>
@@ -183,6 +240,16 @@ export class AppHome {
 
       </ion-content>
     ];
+  }
+
+  get totalScore(): number {
+    return this.totalItemScore + this.character.equipmentBonus + this.character.level;
+  }
+
+  get totalItemScore(): number {
+    return this.character.items.reduce((prev, { score, mod }) => {
+      return prev + score + mod;
+    }, 0);
   }
 
   // UI UPDATE FUNCTIONS
@@ -194,6 +261,7 @@ export class AppHome {
     this.character = { ...this.character };
     localStorage.setItem('charLevel', '' + this.character.level);
     localStorage.setItem('charEquip', '' + this.character.equipmentBonus);
+    localStorage.setItem('charItems', JSON.stringify(this.character.items));
   }
 
   // CHARACTER FUNCTIONS
@@ -211,6 +279,25 @@ export class AppHome {
 
   modEquipment(mod: number): void {
     this.character.equipmentBonus = Math.max(0, this.character.equipmentBonus + mod);
+    this.saveStats();
+  }
+
+  addItem(itemSlot: string): void {
+    this.character.items.push({
+      slot: itemSlot as Slot,
+      score: 0,
+      mod: 0
+    });
+    this.saveStats();
+  }
+
+  removeItem(index: number): void {
+    this.character.items.splice(index, 1);
+    this.saveStats();
+  }
+
+  updateItemScore(index: number, mod: number): void {
+    this.character.items[index].score += mod;
     this.saveStats();
   }
 
