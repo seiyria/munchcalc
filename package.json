@@ -16,6 +16,7 @@
     "ionicons": "^4.5.0-3"
   },
   "devDependencies": {
-    "@stencil/core": "0.16.1"
+    "@stencil/core": "0.16.1",
+    "workbox-build": "3.4.1"
   }
 }

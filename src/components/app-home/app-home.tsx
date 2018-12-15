@@ -58,33 +58,39 @@ export class AppHome {
 
         <h2>Combat Modifier</h2>
 
-        <ion-button margin-right onClick={() => this.modCombat(-20)}>
-          -20
-        </ion-button>
-        <ion-button margin-right onClick={() => this.modCombat(-10)}>
-          -10
-        </ion-button>
-        <ion-button margin-right onClick={() => this.modCombat(-5)}>
-          -5
-        </ion-button>
-        <ion-button margin-right onClick={() => this.modCombat(-1)}>
-          -1
-        </ion-button>
+        <div class="row">
+          <span class="col left">
+            <ion-button margin-right onClick={() => this.modCombat(-20)}>
+              -20
+            </ion-button>
+            <ion-button margin-right onClick={() => this.modCombat(-10)}>
+              -10
+            </ion-button>
+            <ion-button margin-right onClick={() => this.modCombat(-5)}>
+              -5
+            </ion-button>
+            <ion-button margin-right onClick={() => this.modCombat(-1)}>
+              -1
+            </ion-button>
+          </span>
 
-        <span margin-horizontal padding-horizontal>{ this.combat.combatTotal }</span>
+          <span class="col center" margin-horizontal padding-horizontal>{ this.combat.combatTotal }</span>
 
-        <ion-button margin-left onClick={() => this.modCombat(1)}>
-          +1
-        </ion-button>
-        <ion-button margin-left onClick={() => this.modCombat(5)}>
-          +5
-        </ion-button>
-        <ion-button margin-left onClick={() => this.modCombat(10)}>
-          +10
-        </ion-button>
-        <ion-button margin-left onClick={() => this.modCombat(20)}>
-          +20
-        </ion-button>
+          <span class="col right">
+            <ion-button margin-left onClick={() => this.modCombat(1)}>
+              +1
+            </ion-button>
+            <ion-button margin-left onClick={() => this.modCombat(5)}>
+              +5
+            </ion-button>
+            <ion-button margin-left onClick={() => this.modCombat(10)}>
+              +10
+            </ion-button>
+            <ion-button margin-left onClick={() => this.modCombat(20)}>
+              +20
+            </ion-button>
+          </span>
+        </div>
       </div>,
 
       <div margin-top>
@@ -111,44 +117,52 @@ export class AppHome {
           <ion-label>Level</ion-label>
         </h2>
 
-        <div margin-top>
-          <ion-button margin-right onClick={() => this.modLevel(-1)}>
-            -1
-          </ion-button>
+        <div margin-top class="row">
+          <span class="col left">
+            <ion-button margin-right onClick={() => this.modLevel(-1)}>
+              -1
+            </ion-button>
+          </span>
 
-          <span margin-horizontal padding-horizontal>{ this.character.level }</span>
+          <span class="col center" margin-horizontal padding-horizontal>{ this.character.level }</span>
 
-          <ion-button margin-left onClick={() => this.modLevel(1)}>
-            +1
-          </ion-button>
+          <span class="col right">
+            <ion-button margin-left onClick={() => this.modLevel(1)}>
+              +1
+            </ion-button>
+          </span>
         </div>
 
         <h2>
           <ion-label>Equipment</ion-label>
         </h2>
 
-        <div margin-top>
-          <ion-button margin-right onClick={() => this.modEquipment(-10)}>
-            -10
-          </ion-button>
-          <ion-button margin-right onClick={() => this.modEquipment(-5)}>
-            -5
-          </ion-button>
-          <ion-button margin-right onClick={() => this.modEquipment(-1)}>
-            -1
-          </ion-button>
+        <div margin-top class="row">
+          <span class="col left">
+            <ion-button margin-right onClick={() => this.modEquipment(-10)}>
+              -10
+            </ion-button>
+            <ion-button margin-right onClick={() => this.modEquipment(-5)}>
+              -5
+            </ion-button>
+            <ion-button margin-right onClick={() => this.modEquipment(-1)}>
+              -1
+            </ion-button>
+          </span>
 
-          <span margin-horizontal padding-horizontal>{ this.character.equipmentBonus }</span>
+          <span class="col center" margin-horizontal padding-horizontal>{ this.character.equipmentBonus }</span>
 
-          <ion-button margin-left onClick={() => this.modEquipment(1)}>
-            +1
-          </ion-button>
-          <ion-button margin-left onClick={() => this.modEquipment(5)}>
-            +5
-          </ion-button>
-          <ion-button margin-left onClick={() => this.modEquipment(10)}>
-            +10
-          </ion-button>
+          <span class="col right">
+            <ion-button margin-left onClick={() => this.modEquipment(1)}>
+              +1
+            </ion-button>
+            <ion-button margin-left onClick={() => this.modEquipment(5)}>
+              +5
+            </ion-button>
+            <ion-button margin-left onClick={() => this.modEquipment(10)}>
+              +10
+            </ion-button>
+          </span>
         </div>
 
         <h2>
@@ -156,12 +170,8 @@ export class AppHome {
         </h2>
 
         <div>
-          <ion-button onClick={() => this.toggleCombatVisibility(true)}>
-            Begin Combat
-          </ion-button>
-
-          <ion-button margin-horizontal onClick={() => this.toggleCombatVisibility(false)}>
-            Close Combat
+          <ion-button onClick={() => this.toggleCombatVisibility(!this.combat.combatVisible)}>
+            Toggle Combat
           </ion-button>
 
           <ion-button onClick={() => this.resetCombat()}>
