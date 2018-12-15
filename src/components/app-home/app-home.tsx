@@ -57,7 +57,7 @@ export class AppHome {
         <div>
           { this.totalScore } (base) 
           { this.combat.combatTotal >= 0 ? ' +' : ' -' } { Math.abs(this.combat.combatTotal) } = 
-          <strong>{ ' ' + (this.character.equipmentBonus + this.character.level + this.combat.combatTotal) }</strong>
+          <strong>{ ' ' + (this.totalScore + this.combat.combatTotal) }</strong>
         </div>
 
         <h2>Combat Modifier</h2>
