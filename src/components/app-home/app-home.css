@@ -44,3 +44,7 @@
   font-size: 1.25rem;
   width: 70px;
 }
+
+.item .score {
+  width: 60px;
+}

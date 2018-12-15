@@ -162,7 +162,7 @@ export class AppHome {
                 </ion-button>
               </span>
 
-              <span class="col center" margin-horizontal>{ item.score }</span>
+              <span class="col center score" margin-horizontal>{ item.score }</span>
 
               <span class="col right">
                 <ion-button onClick={() => this.updateItemScore(index, 1)}>
