@@ -7,7 +7,7 @@ import { Character, Combat, Slot } from '../../interfaces';
 })
 export class AppHome {
 
-  buttons = ['Head', 'Torso', 'Feet', 'Hand'];
+  buttons = ['Head', 'Torso', 'Feet', 'Hand', 'Other'];
 
   @State() character: Character = {
     level: 1,
