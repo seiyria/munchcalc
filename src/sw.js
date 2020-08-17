@@ -1,4 +1,4 @@
-importScripts('workbox-v3.4.1/workbox-sw.js')
+importScripts('workbox-v5.1.3/workbox-sw.js')
 
 /*
   This is our code to handle push events.
@@ -17,4 +17,4 @@ self.addEventListener('push', (event) => {
   event.waitUntil(self.registration.showNotification(title, options));
 });
 
-self.workbox.precaching.precacheAndRoute([]);
+self.workbox.precaching.precacheAndRoute(self.__WB_MANIFEST);
