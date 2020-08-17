@@ -12,11 +12,11 @@
     "start": "stencil build --dev --watch --serve"
   },
   "dependencies": {
-    "@ionic/core": "4.0.0-beta.18",
-    "ionicons": "^4.5.0-3"
+    "@ionic/core": "^5.3.1",
+    "ionicons": "^5.1.2"
   },
   "devDependencies": {
-    "@stencil/core": "0.16.1",
-    "workbox-build": "3.4.1"
+    "@stencil/core": "^1.17.3",
+    "workbox-build": "^5.1.3"
   }
 }
